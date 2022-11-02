@@ -4,9 +4,9 @@ CREATE TABLE trade_jobs
 (
     id int AUTO_INCREMENT,
     bs tinyint NOT NULL,
-    trade_type varchar(10) NOT NULL,
+    exchange varchar(10) NOT NULL,
     currency varchar(10) NOT NULL,
-    origin_id int,
+    order_id int,
     amount int NOT NULL,
     status BOOLEAN NOT NULL DEFAULT FALSE,
     create_at datetime NOT NULL,

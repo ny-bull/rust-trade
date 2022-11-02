@@ -4,9 +4,9 @@ diesel::table! {
     trade_jobs (id) {
         id -> Integer,
         bs -> Tinyint,
-        trade_type -> Varchar,
+        exchange -> Varchar,
         currency -> Varchar,
-        origin_id -> Nullable<Integer>,
+        order_id -> Nullable<Integer>,
         amount -> Integer,
         status -> Bool,
         create_at -> Datetime,

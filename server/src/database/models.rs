@@ -4,9 +4,9 @@ use diesel::prelude::*;
 pub struct TradeJob {
     pub id: i32,
     pub bs: i8,
-    pub trade_type: String,
+    pub exchange: String,
     pub currency: String,
-    pub origin_id: Option<i32>,
+    pub order_id: Option<i32>,
     pub amount: i32,
     pub status: bool,
     pub create_at: chrono::NaiveDateTime,
