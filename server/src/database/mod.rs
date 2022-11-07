@@ -1,24 +1,26 @@
-use diesel::prelude::*;
 use dotenvy::dotenv;
-use std::env;
+use sqlx::mysql::{self};
+use sqlx::{mysql::MySqlPool, Pool};
+use std::{env, process};
 
 pub mod models;
-pub mod schema;
 
-pub fn establish_connection() -> MysqlConnection {
+pub async fn get_connection() -> Pool<mysql::MySql> {
     dotenv().ok();
+    let database_url = match env::var("DATABASE_URL") {
+        Ok(ok) => ok,
+        Err(err) => {
+            eprint!("Error: std::env said, {}\n", err);
+            process::exit(1);
+        }
+    };
 
-    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
-    MysqlConnection::establish(&database_url)
-        .unwrap_or_else(|_| panic!("Error connecting to {}", database_url))
-}
-
-pub fn get_jobs(con: &mut MysqlConnection) -> Vec<models::TradeJob> {
-    use self::schema::trade_jobs::dsl::*;
-
-    let results = trade_jobs
-        .filter(status.eq(true))
-        .load::<models::TradeJob>(con)
-        .expect("err");
-    results
+    let pool = match MySqlPool::connect(&database_url).await {
+        Ok(ok) => ok,
+        Err(err) => {
+            eprint!("Error: sqlx said, {}\n", err);
+            process::exit(1);
+        }
+    };
+    pool
 }

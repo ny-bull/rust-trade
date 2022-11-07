@@ -1,15 +1,24 @@
 pub mod database;
-
-use database::*;
-
-pub fn main() {
-    println!("Hello");
-
-    let con = &mut establish_connection();
-
-    let jobs = get_jobs(con);
-
-    if jobs.len() > 0 {
-        for job in jobs {}
+use std::process;
+#[tokio::main]
+async fn main() {
+    let pool = database::get_connection().await;
+    if let Err(err) = sqlx::query!(
+        r#"
+        INSERT INTO hoge(
+            id,
+            name
+        )
+        VALUES(
+            1,
+            "yukarisann kawaii yatta-"
+        );
+    "#
+    )
+    .execute(&pool)
+    .await
+    {
+        eprint!("Error: sqlx said {}\n", err);
+        process::exit(1);
     }
 }
