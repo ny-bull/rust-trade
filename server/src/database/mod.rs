@@ -2,9 +2,10 @@ use dotenvy::dotenv;
 use sqlx::mysql::{self};
 use sqlx::{mysql::MySqlPool, Pool};
 use std::{env, process};
-
 pub mod models;
+use async_trait::async_trait;
 
+use self::models::TradeJob;
 pub async fn get_connection() -> Pool<mysql::MySql> {
     dotenv().ok();
     let database_url = match env::var("DATABASE_URL") {
@@ -24,3 +25,9 @@ pub async fn get_connection() -> Pool<mysql::MySql> {
     };
     pool
 }
+
+#[async_trait]
+pub trait DbExt {
+    async fn select(self, sql: String) -> Vec<models::TradeJob>;
+}
+

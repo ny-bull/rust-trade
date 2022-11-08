@@ -7,7 +7,7 @@ edition = "2021"
 
 [dependencies]
 tokio = {version = "1", features = ["full"]}
-sqlx = { version = "0.6", features = [ "mysql", "runtime-tokio-rustls" ] }
+sqlx = { version = "0.6", features = [ "mysql", "runtime-tokio-rustls","chrono" ] }
 dotenvy = "0.15"
 hyper = {version = "0.14", features = ["full"]}
-chrono = "0.4"
+async-trait = "0.1.36"

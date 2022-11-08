@@ -1,12 +1,13 @@
-#[derive(sqlx::Type)]
-#[repr(i16)]
+use sqlx::types::chrono;
+
+
+#[derive(sqlx::Type,Debug)]
 pub enum BS {
     Buy,
     Sell,
 }
 
-#[derive(sqlx::Type)]
-#[repr(i16)]
+#[derive(sqlx::Type,Debug)]
 pub enum Status {
     Pending,
     Running,
@@ -14,6 +15,7 @@ pub enum Status {
     Failed,
 }
 
+#[derive(Debug)]
 pub struct TradeJob {
     pub id: i32,
     pub bs: BS,
@@ -21,8 +23,7 @@ pub struct TradeJob {
     pub currency: String,
     pub order_id: Option<i32>,
     pub amount: i32,
-    pub status: Status,
-    pub create_at: chrono::NaiveDateTime,
-    pub update_at: chrono::NaiveDateTime,
-    pub trade_at: chrono::NaiveDateTime,
+    pub create_at: chrono::DateTime<chrono::Utc>,
+    pub update_at: chrono::DateTime<chrono::Utc>,
+    pub trade_at: chrono::DateTime<chrono::Utc>,
 }
