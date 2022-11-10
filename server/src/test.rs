@@ -19,12 +19,12 @@ async fn insert_job(){
             trade_at
         )
         VALUES(
-            'Buy',
+            1,
             'Binance',
             'BTCUSD',
             NULL,
             10,
-            'Pending',
+            1,
             now(),
             now(),
             now()
